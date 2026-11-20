@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1e1c28" id="metaTheme">
+<title>سجل الجيم</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{
+  --num: sans-serif-condensed, "Roboto Condensed", "Arial Narrow", Roboto, sans-serif;
+  --green1:#47dc9a; --green2:#26a76f;
+  --yel1:#f8d24f; --yel2:#e2ad1c;
+  --red1:#f47a77; --red2:#d94845;
+}
+[data-theme="dark"]{
+  --bg: radial-gradient(900px 520px at 85% -8%, #38306a 0%, rgba(56,48,106,0) 62%), radial-gradient(700px 500px at 0% 105%, #2a2f5a 0%, rgba(42,47,90,0) 60%), #1e1c28;
+  --surface:#282536; --surface2:#322e44; --sheet:#2e2a42;
+  --ink:#f3efe9; --muted:#a8a2b6; --line:rgba(255,255,255,.1); --rule:rgba(255,255,255,.045);
+  --accent:#8f9dff; --btn:linear-gradient(135deg,#6b7bff,#a45cf2); --glow:rgba(143,157,255,.35);
+  --bar:rgba(30,28,40,.94); --gt:#47dc9a; --yt:#f8d24f; --rt:#f47a77;
+}
+[data-theme="light"]{
+  --bg: radial-gradient(900px 520px at 85% -8%, #d9defa 0%, rgba(217,222,250,0) 62%), #eef1f8;
+  --surface:#ffffff; --surface2:#f1f3fa; --sheet:#ffffff;
+  --ink:#1e2336; --muted:#6a7189; --line:rgba(30,40,80,.12); --rule:rgba(60,80,200,.06);
+  --accent:#4a5df0; --btn:linear-gradient(135deg,#4c60f4,#8b4cf0); --glow:rgba(74,93,240,.28);
+  --bar:rgba(255,255,255,.95); --gt:#1f9a65; --yt:#a97c00; --rt:#d13f3c;
+}
+[data-theme="color"]{
+  --bg: linear-gradient(160deg,#2b1065 0%,#6a1b9a 48%,#d94379 100%);
+  --surface:rgba(255,255,255,.13); --surface2:rgba(255,255,255,.14); --sheet:#45197f;
+  --ink:#ffffff; --muted:rgba(255,255,255,.74); --line:rgba(255,255,255,.22); --rule:rgba(255,255,255,.06);
+  --accent:#7ef0ff; --btn:linear-gradient(135deg,#00bfff,#7c5cff); --glow:rgba(126,240,255,.4);
+  --bar:rgba(43,16,101,.9); --gt:#7dffc0; --yt:#ffe27a; --rt:#ffa3a0;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:"Noto Sans Arabic","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;color:var(--ink);line-height:1.5;overflow-x:hidden;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;background:var(--bg);z-index:-1}
+button{font:inherit;color:inherit;cursor:pointer}
+header{display:flex;align-items:center;justify-content:space-between;max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px 4px}
+h1{font-size:1.3rem;margin:0;font-weight:800}
+h2{font-size:1.05rem;margin:0 0 10px;font-weight:800}
+.swatches{display:flex;gap:10px}
+.sw{width:28px;height:28px;border-radius:50%;border:2px solid transparent;padding:0}
+.sw[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface)}
+.sw.dark{background:linear-gradient(135deg,#3b3270,#1e1c28)}
+.sw.light{background:linear-gradient(135deg,#ffffff,#cfd7ee)}
+.sw.color{background:linear-gradient(135deg,#00bfff,#d94379)}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px 190px}
+.muted{color:var(--muted)} .small{font-size:.84rem}
+p{margin:6px 0}
+
+.banner{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:8px 0;padding:10px 12px;border-radius:14px;font-size:.88rem;background:linear-gradient(135deg,rgba(244,197,66,.2),rgba(240,96,93,.18));border:1px solid rgba(244,197,66,.5)}
+.bbtns{display:flex;gap:8px}
+
+.btn{border:1px solid var(--line);background:var(--surface2);padding:11px 16px;border-radius:14px;font-weight:700}
+.btn.primary{background:var(--btn);color:#fff;border:0}
+.btn.danger{color:var(--rt)}
+.btn.sm{padding:7px 12px;border-radius:11px;font-size:.84rem}
+.link{background:none;border:0;color:var(--accent);font-weight:700;padding:4px 2px;font-size:.84rem}
+
+.monthbar{display:flex;align-items:center;justify-content:space-between;margin:10px 0 4px}
+.monthbar .lbl{font-weight:800;font-size:1.05rem}
+.navbtn{width:40px;height:40px;border-radius:13px;border:1px solid var(--line);background:var(--surface);font-size:1.3rem;line-height:1}
+.navbtn:disabled{opacity:.3}
+.strip{position:relative;display:flex;gap:8px;overflow-x:auto;padding:8px 3px 12px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.day{flex:0 0 auto;width:54px;border-radius:16px;padding:8px 0 7px;border:1.5px solid var(--line);background:var(--surface);text-align:center;transition:transform .15s,box-shadow .15s}
+.day .wd{display:block;font-size:.68rem;opacity:.75}
+.day .dn{display:block;font-family:var(--num);font-size:1.55rem;font-weight:800;line-height:1.1}
+.day .gl{display:block;font-size:.76rem;height:1.1em;font-weight:800}
+.day.future{opacity:.3;pointer-events:none}
+.day.today .dn{text-decoration:underline;text-underline-offset:4px}
+.day.s-train{background:linear-gradient(160deg,var(--green1),var(--green2));color:#0c2a1c;border-color:transparent}
+.day.s-rest{background:linear-gradient(160deg,var(--yel1),var(--yel2));color:#35290a;border-color:transparent}
+.day.s-absent{background:linear-gradient(160deg,var(--red1),var(--red2));color:#33090a;border-color:transparent}
+.day.s-absent_ex{background:rgba(240,96,93,.14);border:1.5px dashed var(--rt);color:var(--rt)}
+.day.sel{transform:translateY(-3px);box-shadow:0 0 0 2px var(--ink),0 8px 18px rgba(0,0,0,.28)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.76rem;color:var(--muted);margin:0 2px 4px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:4px;margin-left:5px;vertical-align:-1px;background:var(--line)}
+.legend .g{background:var(--green1)} .legend .y{background:var(--yel1)} .legend .r{background:var(--red1)}
+.legend .rx{background:transparent;border:1.5px dashed var(--rt)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0;position:relative;overflow:hidden}
+[data-theme="color"] .card{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.card.ruled{background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--rule) 31px 32px)}
+.card.st-train::before,.card.st-rest::before,.card.st-absent::before,.card.st-absent_ex::before{content:"";position:absolute;inset:0 0 auto 0;height:5px}
+.card.st-train::before{background:linear-gradient(90deg,var(--green1),var(--green2))}
+.card.st-rest::before{background:linear-gradient(90deg,var(--yel1),var(--yel2))}
+.card.st-absent::before{background:linear-gradient(90deg,var(--red1),var(--red2))}
+.card.st-absent_ex::before{background:repeating-linear-gradient(90deg,var(--red1) 0 10px,transparent 10px 16px)}
+.dayhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.dtitle{font-size:1.4rem;font-weight:800;line-height:1.25}
+.dsub{color:var(--muted);font-size:.84rem}
+.chip2{border-radius:99px;padding:5px 12px;font-size:.8rem;font-weight:700;background:var(--surface2);border:1px solid var(--line);white-space:nowrap}
+.chip2 b{font-family:var(--num);font-size:1.05rem;margin:0 3px}
+
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{padding:12px 6px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface2);font-weight:700;transition:background .2s}
+.seg button.on{border-color:transparent;animation:pop .22s ease}
+.seg button.on[data-s="train"]{background:linear-gradient(160deg,var(--green1),var(--green2));color:#0c2a1c}
+.seg button.on[data-s="rest"]{background:linear-gradient(160deg,var(--yel1),var(--yel2));color:#35290a}
+.seg button.on[data-s="absent"]{background:linear-gradient(160deg,var(--red1),var(--red2));color:#33090a}
+.seg button.on[data-s="absent_ex"]{background:rgba(240,96,93,.2);border:1.5px dashed var(--rt);color:var(--rt)}
+@keyframes pop{0%{transform:scale(.94)}100%{transform:scale(1)}}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{padding:9px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface2);font-weight:700}
+.chip.on{background:var(--btn);color:#fff;border-color:transparent}
+.chip.add{border-style:dashed;color:var(--muted)}
+.chip .x{margin-right:8px;opacity:.7}
+
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--surface2);border:1px solid var(--line);border-radius:18px;padding:10px 12px 10px;transition:box-shadow .2s,border-color .2s}
+.tile:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.tile.wide{grid-column:1/-1}
+.tile .lab{font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center;min-height:26px}
+.tile input{width:100%;background:transparent;border:0;outline:0;color:var(--ink);font-family:var(--num);font-weight:800;font-size:2.6rem;line-height:1.15;text-align:center;padding:2px 0;-moz-appearance:textfield}
+.tile input::-webkit-outer-spin-button,.tile input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.tile input::placeholder{color:var(--muted);opacity:.4}
+.tile input:disabled{opacity:.3}
+.tile .unit{display:block;text-align:center;font-size:.76rem;color:var(--muted);margin-top:-2px}
+.pill{padding:4px 12px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:.78rem;font-weight:700}
+.pill.on{background:var(--accent);color:#14142a;border-color:transparent}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;background:var(--btn);border-radius:99px;transition:width .35s}
+.bar i.over{background:linear-gradient(90deg,var(--yel1),var(--yel2))}
+.goalrow{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:.82rem;color:var(--muted)}
+
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px dashed var(--line)}
+.row:first-of-type{border-top:0}
+.row .rl{font-weight:700} .row .rs{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+.yn{display:flex;gap:8px}
+.yn button{width:56px;height:46px;border-radius:13px;border:1.5px solid var(--line);background:var(--surface2);color:var(--muted);font-size:1.3rem;font-weight:800;transition:background .15s}
+.yn button.yes.on{background:linear-gradient(160deg,var(--green1),var(--green2));color:#0c2a1c;border-color:transparent;animation:pop .2s ease}
+.yn button.no.on{background:linear-gradient(160deg,var(--red1),var(--red2));color:#33090a;border-color:transparent;animation:pop .2s ease}
+
+#savebar{position:fixed;left:0;right:0;bottom:calc(60px + env(safe-area-inset-bottom));padding:10px 14px;display:flex;justify-content:center;pointer-events:none;z-index:20}
+#savebar[hidden]{display:none}
+.btn.save{pointer-events:auto;width:min(560px,100%);background:var(--btn);color:#fff;border:0;font-size:1.12rem;font-weight:800;padding:15px;border-radius:17px;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.btn.save.dirty{animation:ring 1.9s infinite}
+.btn.save.done{background:linear-gradient(160deg,var(--green1),var(--green2));color:#0c2a1c}
+@keyframes ring{0%{box-shadow:0 0 0 0 var(--glow),0 10px 24px rgba(0,0,0,.35)}70%{box-shadow:0 0 0 13px rgba(0,0,0,0),0 10px 24px rgba(0,0,0,.35)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0),0 10px 24px rgba(0,0,0,.35)}}
+
+#tabs{position:fixed;left:0;right:0;bottom:0;height:calc(60px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);display:grid;grid-template-columns:repeat(4,1fr);background:var(--bar);border-top:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:30}
+#tabs button{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:.84rem;position:relative}
+#tabs button[aria-selected="true"]{color:var(--ink)}
+#tabs button[aria-selected="true"]::after{content:"";position:absolute;top:0;left:25%;right:25%;height:3px;border-radius:0 0 4px 4px;background:var(--btn)}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
+.stat{background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:10px 6px;text-align:center}
+.stat b{display:block;font-family:var(--num);font-size:2rem;font-weight:800;line-height:1.1}
+.stat span{display:block;font-size:.76rem;color:var(--muted)}
+.stat em{display:block;font-style:normal;font-size:.7rem;color:var(--muted)}
+.stat.g b{color:var(--gt)} .stat.y b{color:var(--yt)} .stat.r b{color:var(--rt)}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
+.nav .t{font-weight:800;text-align:center;flex:1}
+.nav .t small{display:block;font-weight:400;color:var(--muted);font-size:.76rem}
+.trow{display:grid;grid-template-columns:105px 1fr 30px;gap:10px;align-items:center;margin:8px 0}
+.tbar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.tbar i{display:block;height:100%;background:var(--btn);border-radius:99px}
+.trow b{font-family:var(--num);font-size:1.25rem;text-align:center}
+.wb{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;padding:12px 0;border-top:1px dashed var(--line)}
+.wb:first-of-type{border-top:0}
+.wb .avg{font-family:var(--num);font-size:2.4rem;font-weight:800;line-height:1.1;grid-row:span 2}
+.wb .avg small{font-size:.9rem;font-weight:600;color:var(--muted);margin-right:4px}
+.wb .meta{font-size:.82rem;color:var(--muted)}
+.wb .dif{font-weight:800;font-size:.9rem}
+
+.subbox{border-radius:26px;padding:26px 16px;text-align:center;background:var(--btn);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.28)}
+.subbox.warn{background:linear-gradient(160deg,var(--red1),var(--red2));color:#33090a}
+.subbox b{display:block;font-family:var(--num);font-size:5.4rem;font-weight:800;line-height:1}
+.subbox span{display:block;font-size:1.05rem;font-weight:700;margin-top:6px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+.modal[hidden]{display:none}
+.sheet{width:min(560px,100%);background:var(--sheet);border-radius:24px 24px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));border:1px solid var(--line)}
+.sheet h3{margin:0 0 12px;font-size:1.1rem}
+.sheet input{width:100%;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface2);color:var(--ink);font:inherit;font-size:1.2rem;outline:0}
+.sheet input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+.mbtns{display:flex;gap:10px;margin-top:14px}
+.mbtns .btn{flex:1}
+#toast{position:fixed;left:50%;bottom:calc(138px + env(safe-area-inset-bottom));transform:translate(-50%,12px);background:var(--sheet);color:var(--ink);border:1px solid var(--line);padding:10px 16px;border-radius:99px;font-size:.9rem;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>سجل الجيم</h1>
+  <div class="swatches" role="group" aria-label="تبديل الألوان">
+    <button class="sw dark" data-act="theme" data-th="dark" aria-label="داكن"></button>
+    <button class="sw light" data-act="theme" data-th="light" aria-label="فاتح"></button>
+    <button class="sw color" data-act="theme" data-th="color" aria-label="ملون"></button>
+  </div>
+</header>
+<main class="wrap" id="view"></main>
+<div id="savebar" hidden><button class="btn save" id="saveBtn" data-act="save">حفظ</button></div>
+<nav id="tabs" aria-label="التنقل">
+  <button data-act="tab" data-t="day">اليوم</button>
+  <button data-act="tab" data-t="stats">الإحصائيات</button>
+  <button data-act="tab" data-t="sub">الاشتراك</button>
+  <button data-act="tab" data-t="backup">النسخ</button>
+</nav>
+<div class="modal" id="modal" hidden>
+  <div class="sheet">
+    <h3 id="mTitle"></h3>
+    <input id="mInput">
+    <div class="mbtns">
+      <button class="btn primary" id="mOk">حفظ</button>
+      <button class="btn" id="mCancel">إلغاء</button>
+    </div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+<input type="file" id="fileIn" accept=".json,application/json" hidden>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- constants ---------- */
+var KEY='gymtracker.v1';
+var MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+var WD=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+var WDS=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+var STATUS={train:'تمرين',rest:'راحة',absent_ex:'غياب بعذر',absent:'غياب بدون عذر'};
+var GL={train:'✓',rest:'☾',absent:'✗',absent_ex:'✗'};
+var DEFAULT_TYPES=['Push & Neck','Pull','Legs'];
+var THEME_COLORS={dark:'#1e1c28',light:'#eef1f8',color:'#4a1a78'};
+
+function $(s){return document.querySelector(s);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function val(v){return v==null?'':v;}
+function daysWord(n){return n===1?'يوم واحد':n===2?'يومين':(n>=3&&n<=10)?n+' أيام':n+' يوم';}
+
+/* ---------- dates (a "day" ends at 6 AM) ---------- */
+function pad(n){return String(n).padStart(2,'0');}
+function keyOf(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function parse(k){var p=k.split('-').map(Number);return new Date(p[0],p[1]-1,p[2],12);}
+function addDays(k,n){var d=parse(k);d.setDate(d.getDate()+n);return keyOf(d);}
+function diffDays(a,b){return Math.round((parse(a)-parse(b))/86400000);}
+function effToday(){return keyOf(new Date(Date.now()-6*3600*1000));}
+function realToday(){return keyOf(new Date());}
+function weekStartOf(k){var dow=parse(k).getDay();return addDays(k,-((dow-5+7)%7));} /* weeks run Friday to Thursday */
+function fd(k){var d=parse(k);return d.getDate()+' '+MONTHS[d.getMonth()];}
+
+/* ---------- storage ---------- */
+var storageOK=true, corrupt=false;
+try{localStorage.setItem('__gt','1');localStorage.removeItem('__gt');}catch(e){storageOK=false;}
+try{if(navigator.storage&&navigator.storage.persist){navigator.storage.persist();}}catch(e){}
+
+function normalize(o){
+  var s=Object.assign({calGoal:null,theme:'dark',types:DEFAULT_TYPES.slice(),subDate:null,lastBackup:null},o.settings||{});
+  if(!Array.isArray(s.types)||!s.types.length)s.types=DEFAULT_TYPES.slice();
+  if(!THEME_COLORS[s.theme])s.theme='dark';
+  return {v:1,days:(o.days&&typeof o.days==='object')?o.days:{},settings:s};
+}
+function load(){
+  if(storageOK){
+    var raw=null;
+    try{raw=localStorage.getItem(KEY);}catch(e){storageOK=false;}
+    if(raw){
+      try{return normalize(JSON.parse(raw));}
+      catch(e){corrupt=true;try{localStorage.setItem(KEY+'.bad',raw);}catch(e2){}}
+    }
+  }
+  return normalize({});
+}
+function save(){
+  if(!storageOK)return false;
+  try{localStorage.setItem(KEY,JSON.stringify(state));return true;}
+  catch(e){storageOK=false;return false;}
+}
+
+/* ---------- state ---------- */
+var state=load();
+var tab='day';
+var selected=effToday();
+var viewMonth=selected.slice(0,7);
+var statMonth=selected.slice(0,7);
+var weekOffset=0;
+var draft=null, dirty=false, savedFlash=0, snoozed=false;
+
+function blank(){return {status:null,type:null,minutes:null,weight:null,cal:null,calSkip:false,protein:null,creatine:null,abs:null,clean:null};}
+function openDay(k){draft=Object.assign(blank(),state.days[k]||{});dirty=false;selected=k;}
+function isEmpty(d){
+  return !d.status&&!d.type&&d.minutes==null&&d.weight==null&&d.cal==null&&!d.calSkip&&d.protein==null&&d.creatine==null&&d.abs==null&&d.clean==null;
+}
+function setDirty(v){dirty=v;renderSave();}
+openDay(selected);
+
+/* ---------- toast + modal ---------- */
+var tt;
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show');},2300);}
+var mCb=null;
+function ask(title,opt,cb){
+  $('#mTitle').textContent=title;
+  var i=$('#mInput');
+  i.type=opt.type||'text';i.value=opt.value==null?'':opt.value;i.placeholder=opt.ph||'';
+  i.setAttribute('inputmode',opt.im||'');i.step='any';
+  mCb=cb;$('#modal').hidden=false;
+  setTimeout(function(){i.focus();},60);
+}
+function closeModal(){$('#modal').hidden=true;mCb=null;}
+$('#mOk').addEventListener('click',function(){var v=$('#mInput').value,cb=mCb;closeModal();if(cb)cb(v);});
+$('#mCancel').addEventListener('click',closeModal);
+$('#modal').addEventListener('click',function(e){if(e.target.id==='modal')closeModal();});
+$('#mInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();$('#mOk').click();}});
+
+/* ---------- calculations ---------- */
+function summarize(keys){
+  var T=effToday();
+  var r={train:0,rest:0,absEx:0,abs:0,none:0,calN:0,calSum:0,pN:0,pSum:0,absW:0,clean:0,minSum:0,minN:0,types:{}};
+  keys.forEach(function(k){
+    if(k>T)return;
+    var d=state.days[k];
+    if(!d||!d.status){if(k<T)r.none++;}
+    if(d){
+      if(d.status==='train'){
+        r.train++;
+        if(d.type)r.types[d.type]=(r.types[d.type]||0)+1;
+        if(d.minutes!=null){r.minN++;r.minSum+=d.minutes;}
+        if(d.abs===true)r.absW++;
+      }else if(d.status==='rest')r.rest++;
+      else if(d.status==='absent_ex')r.absEx++;
+      else if(d.status==='absent')r.abs++;
+      if(!d.calSkip&&d.cal!=null){r.calN++;r.calSum+=d.cal;}
+      if(d.protein!=null){r.pN++;r.pSum+=d.protein;}
+      if(d.clean===true)r.clean++;
+    }
+  });
+  return r;
+}
+function monthKeys(ym){
+  var p=ym.split('-').map(Number),n=new Date(p[0],p[1],0).getDate(),out=[];
+  for(var i=1;i<=n;i++)out.push(p[0]+'-'+pad(p[1])+'-'+pad(i));
+  return out;
+}
+function weightBlocks(){
+  var entries=Object.keys(state.days).filter(function(k){return state.days[k].weight!=null;}).sort().map(function(k){return {k:k,w:state.days[k].weight};});
+  var blocks=[];
+  for(var i=0;i<entries.length;i+=5){
+    var c=entries.slice(i,i+5);
+    var avg=c.reduce(function(s,e){return s+e.w;},0)/c.length;
+    blocks.push({n:blocks.length+1,from:c[0].k,to:c[c.length-1].k,count:c.length,avg:avg,days:diffDays(c[c.length-1].k,c[0].k)+1,full:c.length===5,diff:null});
+  }
+  blocks.forEach(function(b,i){if(i>0)b.diff=b.avg-blocks[i-1].avg;});
+  return blocks.reverse();
+}
+function streaks(){
+  var T=effToday(),D=state.days,k,cur=0;
+  var tv=D[T]&&D[T].clean;
+  if(tv===true)k=T;else if(tv===false)k=null;else k=addDays(T,-1);
+  if(k){while(D[k]&&D[k].clean===true){cur++;k=addDays(k,-1);}}
+  var ks=Object.keys(D).filter(function(x){return D[x].clean===true;}).sort();
+  var best=0,run=0,prev=null;
+  ks.forEach(function(x){run=(prev&&diffDays(x,prev)===1)?run+1:1;if(run>best)best=run;prev=x;});
+  return {cur:cur,best:best};
+}
+
+/* ---------- views: day ---------- */
+function banners(){
+  var h='';
+  var proto=(typeof location!=='undefined')?location.protocol:'';
+  if(proto==='content:'||proto==='file:')h+='<div class="banner"><span>الصفحة مفتوحة من الملفات، والحفظ هنا ممكن يتمسح لما تقفل كروم. افتحها من الرابط أو من أيقونة الشاشة الرئيسية.</span><span class="bbtns"><button class="btn primary sm" data-act="export">نسخة الآن</button></span></div>';
+  if(corrupt)h+='<div class="banner"><span>ملف الحفظ كان تالف، واتحفظت منه نسخة جانبية. لو معاك نسخة احتياطية استوردها من تبويب النسخ.</span></div>';
+  if(!storageOK)h+='<div class="banner"><span>المتصفح مش سامح بالحفظ دلوقتي. البيانات هتفضل مؤقتة، فاعمل نسخة احتياطية كل ما تخلص.</span><span class="bbtns"><button class="btn primary sm" data-act="export">نسخة الآن</button></span></div>';
+  var n=Object.keys(state.days).length,lb=state.settings.lastBackup;
+  if(n>0&&!snoozed&&storageOK){
+    var age=lb?diffDays(realToday(),lb):null;
+    if((lb&&age>=7)||(!lb&&n>=3)){
+      h+='<div class="banner"><span>'+(lb?'آخر نسخة احتياطية من '+daysWord(age):'لسه معملتش نسخة احتياطية')+'.</span><span class="bbtns"><button class="btn primary sm" data-act="export">نسخة الآن</button><button class="btn sm" data-act="snooze">بعدين</button></span></div>';
+    }
+  }
+  return h;
+}
+function monthBar(){
+  var p=viewMonth.split('-').map(Number);
+  var atMax=viewMonth>=effToday().slice(0,7);
+  return '<div class="monthbar"><button class="navbtn" data-act="mprev" aria-label="الشهر اللي قبله">›</button><span class="lbl">'+MONTHS[p[1]-1]+' '+p[0]+'</span><button class="navbtn" data-act="mnext" aria-label="الشهر اللي بعده"'+(atMax?' disabled':'')+'>‹</button></div>';
+}
+function stripHtml(){
+  var T=effToday(),p=viewMonth.split('-').map(Number),n=new Date(p[0],p[1],0).getDate();
+  var s='<div class="strip" id="strip">';
+  for(var i=1;i<=n;i++){
+    var k=p[0]+'-'+pad(p[1])+'-'+pad(i);
+    var rec=state.days[k],stt=rec&&rec.status;
+    var cls=['day'];
+    if(stt)cls.push('s-'+stt);
+    if(k>T)cls.push('future');
+    if(k===selected)cls.push('sel');
+    if(k===T)cls.push('today');
+    var dow=new Date(p[0],p[1]-1,i,12).getDay();
+    s+='<button class="'+cls.join(' ')+'" data-act="pick" data-k="'+k+'" aria-label="'+i+' '+MONTHS[p[1]-1]+'"><span class="wd">'+WDS[dow]+'</span><span class="dn">'+i+'</span><span class="gl">'+(GL[stt]||'')+'</span></button>';
+  }
+  return s+'</div>';
+}
+function legend(){
+  return '<div class="legend"><span><i class="g"></i>تمرين</span><span><i class="y"></i>راحة</span><span><i class="r"></i>غياب</span><span><i class="rx"></i>غياب بعذر</span><span><i></i>لسه</span></div>';
+}
+function ynRow(label,sub,f){
+  var v=draft[f];
+  return '<div class="row"><div class="rl">'+label+(sub?'<span class="rs">'+sub+'</span>':'')+'</div><div class="yn"><button class="yes'+(v===true?' on':'')+'" data-act="yn" data-f="'+f+'" data-v="1" aria-label="أيوه">✓</button><button class="no'+(v===false?' on':'')+'" data-act="yn" data-f="'+f+'" data-v="0" aria-label="لا">✗</button></div></div>';
+}
+function numTile(label,f,unit,step,mode,wide){
+  return '<div class="tile'+(wide?' wide':'')+'"><div class="lab"><span>'+label+'</span></div><input data-f="'+f+'" type="number" inputmode="'+mode+'" min="0" step="'+step+'" placeholder="0" dir="ltr" value="'+val(draft[f])+'"><span class="unit">'+unit+'</span></div>';
+}
+function dayView(){
+  var T=effToday(),st=draft.status,goal=state.settings.calGoal,sel=parse(selected),h='';
+  h+=banners()+monthBar()+stripHtml()+legend();
+  var diff=diffDays(T,selected);
+  var rel=diff===0?'النهاردة':diff===1?'امبارح':'من '+daysWord(diff);
+  var sk=streaks();
+  h+='<section class="card ruled st-'+(st||'none')+'"><div class="dayhead"><div><div class="dtitle">'+WD[sel.getDay()]+' '+sel.getDate()+' '+MONTHS[sel.getMonth()]+'</div><div class="dsub">'+rel+'</div></div><div class="chip2">Clean<b>'+sk.cur+'</b>'+(sk.cur===1?'يوم':'أيام')+'</div></div>';
+  h+='<div class="seg">';
+  ['train','rest','absent_ex','absent'].forEach(function(s){h+='<button data-act="status" data-s="'+s+'" class="'+(st===s?'on':'')+'">'+STATUS[s]+'</button>';});
+  h+='</div></section>';
+
+  if(st==='train'){
+    var types=state.settings.types.slice();
+    if(draft.type&&types.indexOf(draft.type)<0)types.push(draft.type);
+    h+='<section class="card"><h2>التمرينة</h2><div class="chips">';
+    types.forEach(function(t){h+='<button class="chip'+(draft.type===t?' on':'')+'" data-act="type" data-t="'+esc(t)+'">'+esc(t)+'</button>';});
+    h+='<button class="chip add" data-act="addtype">+ نوع جديد</button></div>';
+    h+='<div class="tiles">'+numTile('مدة التمرينة','minutes','دقيقة','1','numeric',true)+'</div>';
+    h+=ynRow('تمرينة البطن','اتعملت؟','abs');
+    h+='</section>';
+  }
+
+  h+='<section class="card"><h2>الوزن والأكل</h2><div class="tiles">';
+  h+=numTile('الوزن','weight','كجم','0.1','decimal',false);
+  h+=numTile('البروتين','protein','جرام','1','numeric',false);
+  h+='<div class="tile wide"><div class="lab"><span>السعرات</span><button class="pill'+(draft.calSkip?' on':'')+'" data-act="skipcal">ماحسبتش</button></div>';
+  h+='<input data-f="cal" type="number" inputmode="numeric" min="0" step="1" placeholder="0" dir="ltr" value="'+val(draft.cal)+'"'+(draft.calSkip?' disabled':'')+'><span class="unit">سعر حراري</span>';
+  h+='<div class="bar"><i id="calBar"></i></div><div class="goalrow"><span id="calInfo"></span><button class="link" data-act="goal">'+(goal?'تعديل الهدف':'حدد الهدف')+'</button></div></div>';
+  h+='</div></section>';
+
+  h+='<section class="card"><h2>عادات اليوم</h2>';
+  h+=ynRow('الكرياتين','أخدت الجرعة؟','creatine');
+  h+=ynRow('Clean','','clean');
+  h+='</section>';
+  return h;
+}
+function updateCalUI(){
+  var bar=$('#calBar'),info=$('#calInfo');
+  if(!bar||!info)return;
+  var g=state.settings.calGoal,c=draft.cal;
+  bar.classList.remove('over');
+  if(!g){bar.style.width='0';info.textContent='لسه مفيش هدف';return;}
+  if(draft.calSkip||c==null){bar.style.width='0';info.textContent='الهدف '+g;return;}
+  bar.style.width=Math.min(100,c/g*100)+'%';
+  if(c<=g)info.textContent='الهدف '+g+'، متبقي '+(g-c);
+  else{info.textContent='الهدف '+g+'، زيادة '+(c-g);bar.classList.add('over');}
+}
+
+/* ---------- views: stats ---------- */
+function tileS(lab,v,cls,sub){return '<div class="stat '+(cls||'')+'"><b>'+v+'</b><span>'+lab+'</span>'+(sub?'<em>'+sub+'</em>':'')+'</div>';}
+function avgTiles(r){
+  var cal=r.calN?Math.round(r.calSum/r.calN):'—';
+  var pr=r.pN?Math.round(r.pSum/r.pN):'—';
+  return '<div class="grid2">'+tileS('متوسط السعرات',cal,'',r.calN?'من '+daysWord(r.calN):'مفيش أيام مسجلة')+tileS('متوسط البروتين (جم)',pr,'',r.pN?'من '+daysWord(r.pN):'مفيش أيام مسجلة')+'</div>';
+}
+function weekCard(){
+  var T=effToday(),start=addDays(weekStartOf(T),weekOffset*7),keys=[];
+  for(var i=0;i<7;i++)keys.push(addDays(start,i));
+  var r=summarize(keys);
+  var h='<section class="card"><h2>ملخص الأسبوع</h2><div class="nav"><button class="navbtn" data-act="wprev" aria-label="الأسبوع اللي قبله">›</button><div class="t">'+fd(keys[0])+' إلى '+fd(keys[6])+'<small>من الجمعة للخميس</small></div><button class="navbtn" data-act="wnext" aria-label="الأسبوع اللي بعده"'+(weekOffset>=0?' disabled':'')+'>‹</button></div>';
+  h+='<div class="grid3">'+tileS('تمرين',r.train,'g')+tileS('راحة',r.rest,'y')+tileS('غياب',r.absEx+r.abs,'r','بعذر '+r.absEx+' / بدون '+r.abs)+'</div>';
+  h+=avgTiles(r);
+  h+='<div class="grid3">'+tileS('تمرينة البطن',r.absW)+tileS('أيام Clean',r.clean)+tileS('بدون تسجيل',r.none)+'</div></section>';
+  return h;
+}
+function monthCard(){
+  var p=statMonth.split('-').map(Number),r=summarize(monthKeys(statMonth));
+  var atMax=statMonth>=effToday().slice(0,7);
+  var h='<section class="card"><h2>الإحصائيات الشهرية</h2><div class="nav"><button class="navbtn" data-act="smprev" aria-label="الشهر اللي قبله">›</button><div class="t">'+MONTHS[p[1]-1]+' '+p[0]+'</div><button class="navbtn" data-act="smnext" aria-label="الشهر اللي بعده"'+(atMax?' disabled':'')+'>‹</button></div>';
+  h+='<div class="grid3">'+tileS('اتمرنت',r.train,'g','مرة')+tileS('راحة',r.rest,'y')+tileS('غبت',r.absEx+r.abs,'r','بعذر '+r.absEx+' / بدون '+r.abs)+'</div>';
+  var entries=Object.keys(r.types).map(function(n){return [n,r.types[n]];}).sort(function(a,b){return b[1]-a[1];});
+  var max=entries.length?entries[0][1]:1;
+  h+='<h2 style="margin-top:14px">أنواع التمارين</h2>';
+  if(entries.length){entries.forEach(function(e){h+='<div class="trow"><span>'+esc(e[0])+'</span><div class="tbar"><i style="width:'+(e[1]/max*100)+'%"></i></div><b>'+e[1]+'</b></div>';});}
+  else h+='<p class="muted small">لسه مفيش تمارين متسجلة في الشهر ده.</p>';
+  h+='<div style="height:10px"></div>'+avgTiles(r);
+  h+='<div class="grid3">'+tileS('متوسط المدة',r.minN?Math.round(r.minSum/r.minN):'—','',r.minN?'دقيقة':'')+tileS('تمرينة البطن',r.absW)+tileS('أيام Clean',r.clean)+'</div>';
+  h+='<p class="muted small">بدون تسجيل: '+r.none+'</p></section>';
+  return h;
+}
+function weightCard(){
+  var bl=weightBlocks();
+  var h='<section class="card"><h2>متوسط الوزن (كل 5 وزنات)</h2>';
+  if(!bl.length)return h+'<p class="muted small">سجّل وزنك 5 مرات وهتظهر أول مجموعة هنا.</p></section>';
+  bl.forEach(function(b){
+    var d='';
+    if(b.diff!=null){
+      var f=Math.abs(b.diff).toFixed(1);
+      d='<span class="dif">'+(b.diff>0.04?'▲ +':b.diff<-0.04?'▼ −':'■ ')+f+' كجم عن اللي قبلها</span>';
+    }
+    h+='<div class="wb"><div class="avg">'+b.avg.toFixed(1)+'<small>كجم</small></div><div class="meta">المجموعة '+b.n+(b.full?'':' (قيد التجميع: '+b.count+' من 5)')+'</div><div class="meta">استغرقت '+daysWord(b.days)+' ('+fd(b.from)+' إلى '+fd(b.to)+')</div>'+(d?'<div class="dif" style="grid-column:1/-1">'+d+'</div>':'')+'</div>';
+  });
+  return h+'</section>';
+}
+function cleanCard(){
+  var s=streaks();
+  return '<section class="card"><h2>Clean</h2><div class="grid2">'+tileS('السلسلة الحالية',s.cur,'g',s.cur===1?'يوم':'أيام')+tileS('أطول سلسلة',s.best,'',s.best===1?'يوم':'أيام')+'</div><p class="muted small">السلسلة بتنقطع لو اخترت ✗ أو عدّى يوم من غير تسجيل.</p></section>';
+}
+function statsView(){
+  var h='';
+  if(dirty)h+='<div class="banner"><span>فيه تعديلات مش محفوظة في تبويب اليوم، ومش داخلة في الأرقام دي.</span></div>';
+  return h+weekCard()+monthCard()+weightCard()+cleanCard();
+}
+
+/* ---------- views: subscription ---------- */
+function subView(){
+  var s=state.settings,h='';
+  if(!s.subDate){
+    return '<section class="card"><h2>الاشتراك</h2><p class="muted">حدد تاريخ تجديد اشتراكك وهيظهرلك فاضل كام يوم.</p><div class="btns"><button class="btn primary" data-act="sub">حدد تاريخ التجديد</button></div></section>';
+  }
+  var left=diffDays(s.subDate,realToday()),big,label;
+  if(left>=0){big=left;label=left===0?'ينتهي النهاردة':left===1?'فاضل يوم واحد':'يوم متبقي';}
+  else{big=-left;label='يوم من انتهاء الاشتراك';}
+  var d=parse(s.subDate);
+  h+='<div class="subbox'+(left<=5?' warn':'')+'"><b>'+big+'</b><span>'+label+'</span></div>';
+  h+='<section class="card"><h2>تاريخ التجديد</h2><p>'+WD[d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()]+' '+d.getFullYear()+'</p><p class="muted small">المربع بيتحول للأحمر لما يفضل 5 أيام أو أقل.</p><div class="btns"><button class="btn primary" data-act="sub">تغيير التاريخ</button><button class="btn danger" data-act="subclear">مسح</button></div></section>';
+  return h;
+}
+
+/* ---------- views: backup / settings ---------- */
+function backupView(){
+  var s=state.settings,lb=s.lastBackup,n=Object.keys(state.days).length;
+  var h='<section class="card"><h2>النسخة الاحتياطية</h2><p class="muted small">بياناتك محفوظة على تليفونك بس. لو مسحت بيانات الموقع من كروم أو من تطبيق تنضيف، الأيام هتتمسح. النسخة الاحتياطية بتحميك من ده.</p>';
+  h+='<p>الأيام المحفوظة: <b>'+n+'</b></p><p>آخر نسخة: <b>'+(lb?'من '+daysWord(Math.max(0,diffDays(realToday(),lb))):'لسه مفيش')+'</b></p>';
+  h+='<div class="btns"><button class="btn primary" data-act="export">تنزيل نسخة احتياطية</button><button class="btn" data-act="import">استرجاع من ملف</button></div></section>';
+  h+='<section class="card"><h2>الإعدادات</h2><div class="row"><div class="rl">هدف السعرات اليومي<span class="rs">'+(s.calGoal?s.calGoal+' سعر':'لسه مش محدد')+'</span></div><button class="btn sm" data-act="goal">تعديل</button></div>';
+  h+='<div class="row" style="display:block"><div class="rl" style="margin-bottom:8px">أنواع التمرين</div><div class="chips" style="margin:0">';
+  s.types.forEach(function(t){h+='<button class="chip" data-act="deltype" data-t="'+esc(t)+'" aria-label="حذف '+esc(t)+'">'+esc(t)+'<span class="x">×</span></button>';});
+  h+='<button class="chip add" data-act="addtype2">+ نوع جديد</button></div></div></section>';
+  h+='<section class="card"><h2>معلومات</h2><p class="muted small">اليوم بيتقفل الساعة 6 الصبح، فلو فتحته قبل كده هتلاقيه لسه على اليوم اللي فات.</p><p class="muted small">حالة الحفظ: '+(storageOK?'شغال':'مش شغال، استخدم النسخة الاحتياطية')+'.</p><p class="muted small">افتح الملف دايمًا من نفس المتصفح ونفس المكان عشان تلاقي بياناتك.</p></section>';
+  return h;
+}
+
+/* ---------- render ---------- */
+function scrollSelected(){
+  var el=document.querySelector('.day.sel'),st=$('#strip');
+  if(!st)return;
+  if(el&&el.scrollIntoView)el.scrollIntoView({inline:'center',block:'nearest'});
+  else st.scrollLeft=0;
+}
+function renderView(o){
+  o=o||{};
+  var y=window.scrollY,old=$('#strip'),sl=old?old.scrollLeft:0,h;
+  if(tab==='day')h=dayView();
+  else if(tab==='stats')h=statsView();
+  else if(tab==='sub')h=subView();
+  else h=backupView();
+  $('#view').innerHTML=h;
+  if(tab==='day'){
+    updateCalUI();
+    if(o.center)scrollSelected();
+    else{var s=$('#strip');if(s)s.scrollLeft=sl;}
+  }
+  window.scrollTo(0,o.top?0:y);
+}
+function renderSave(){
+  var bar=$('#savebar'),b=$('#saveBtn');
+  bar.hidden=(tab!=='day');
+  if(tab!=='day')return;
+  var saved=!!state.days[selected]&&!dirty;
+  b.className='btn save'+(dirty?' dirty':(saved&&Date.now()-savedFlash<2000?' done':''));
+  b.textContent=dirty?'حفظ':(saved?'محفوظ ✓':'حفظ');
+}
+function renderChrome(){
+  document.documentElement.setAttribute('data-theme',state.settings.theme);
+  $('#metaTheme').setAttribute('content',THEME_COLORS[state.settings.theme]);
+  Array.prototype.forEach.call(document.querySelectorAll('.sw'),function(b){b.setAttribute('aria-pressed',b.dataset.th===state.settings.theme?'true':'false');});
+  Array.prototype.forEach.call(document.querySelectorAll('#tabs button'),function(b){b.setAttribute('aria-selected',b.dataset.t===tab?'true':'false');});
+}
+function render(o){renderChrome();renderView(o);renderSave();}
+
+/* ---------- actions ---------- */
+function validate(d){
+  function bad(v,min,max){return v!=null&&(v<min||v>max);}
+  if(bad(d.weight,20,400))return 'الوزن';
+  if(bad(d.minutes,0,600))return 'مدة التمرينة';
+  if(bad(d.cal,0,20000))return 'السعرات';
+  if(bad(d.protein,0,1000))return 'البروتين';
+  return null;
+}
+function saveDay(){
+  var bad=validate(draft);
+  if(bad){toast('راجع قيمة: '+bad);return;}
+  var d=Object.assign({},draft);
+  if(d.status!=='train'){d.type=null;d.minutes=null;d.abs=null;}
+  if(d.calSkip)d.cal=null;
+  if(isEmpty(d))delete state.days[selected];else state.days[selected]=d;
+  if(save()){
+    draft=Object.assign(blank(),state.days[selected]||{});
+    dirty=false;savedFlash=Date.now();
+    renderView();renderSave();toast('اتحفظ ✓');
+    setTimeout(renderSave,2100);
+  }else{
+    toast('الحفظ مش شغال. اعمل نسخة احتياطية من تبويب النسخ.');
+    renderView();
+  }
+}
+function pickDay(k){
+  if(k===selected){renderView({center:true});return;}
+  if(dirty&&!confirm('عندك تعديلات مش محفوظة في اليوم ده. تكمل وتتجاهلها؟'))return;
+  openDay(k);viewMonth=k.slice(0,7);render({center:true});
+}
+function shiftMonth(ym,n){var p=ym.split('-').map(Number),d=new Date(p[0],p[1]-1+n,1);return d.getFullYear()+'-'+pad(d.getMonth()+1);}
+function addType(done){
+  ask('اسم نوع التمرين الجديد',{ph:'مثلًا Arms'},function(v){
+    v=v.trim();
+    if(!v)return;
+    if(state.settings.types.indexOf(v)<0){state.settings.types.push(v);save();}
+    done(v);
+  });
+}
+function exportData(){
+  var blob=new Blob([JSON.stringify(state,null,1)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='gym-backup-'+realToday()+'.json';
+  document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
+  state.settings.lastBackup=realToday();save();
+  renderView();toast('اتنزلت النسخة الاحتياطية');
+}
+function act(a,b){
+  switch(a){
+    case 'tab':
+      tab=b.dataset.t;render({top:true});if(tab==='day')scrollSelected();break;
+    case 'theme':
+      state.settings.theme=b.dataset.th;save();renderChrome();break;
+    case 'pick':pickDay(b.dataset.k);break;
+    case 'mprev':viewMonth=shiftMonth(viewMonth,-1);renderView({center:viewMonth===selected.slice(0,7)});break;
+    case 'mnext':if(viewMonth<effToday().slice(0,7)){viewMonth=shiftMonth(viewMonth,1);renderView({center:viewMonth===selected.slice(0,7)});}break;
+    case 'status':draft.status=(draft.status===b.dataset.s)?null:b.dataset.s;setDirty(true);renderView();break;
+    case 'type':draft.type=(draft.type===b.dataset.t)?null:b.dataset.t;setDirty(true);renderView();break;
+    case 'addtype':addType(function(v){draft.type=v;setDirty(true);renderView();});break;
+    case 'addtype2':addType(function(){renderView();toast('اتضاف النوع');});break;
+    case 'deltype':
+      if(confirm('تحذف "'+b.dataset.t+'" من القايمة؟ الأيام القديمة هتفضل محتفظة باسمه.')){
+        state.settings.types=state.settings.types.filter(function(t){return t!==b.dataset.t;});
+        if(!state.settings.types.length)state.settings.types=DEFAULT_TYPES.slice();
+        save();renderView();
+      }
+      break;
+    case 'yn':
+      var f=b.dataset.f,v=b.dataset.v==='1';
+      draft[f]=(draft[f]===v)?null:v;setDirty(true);renderView();break;
+    case 'skipcal':
+      draft.calSkip=!draft.calSkip;if(draft.calSkip)draft.cal=null;setDirty(true);renderView();break;
+    case 'goal':
+      ask('هدف السعرات اليومي',{type:'number',im:'numeric',ph:'مثلًا 2500',value:state.settings.calGoal},function(v){
+        if(v===''){state.settings.calGoal=null;}
+        else{var n=Number(v);if(n>0&&n<20000)state.settings.calGoal=Math.round(n);else{toast('رقم غير صالح');return;}}
+        save();renderView();
+      });break;
+    case 'save':saveDay();break;
+    case 'wprev':weekOffset--;renderView();break;
+    case 'wnext':if(weekOffset<0){weekOffset++;renderView();}break;
+    case 'smprev':statMonth=shiftMonth(statMonth,-1);renderView();break;
+    case 'smnext':if(statMonth<effToday().slice(0,7)){statMonth=shiftMonth(statMonth,1);renderView();}break;
+    case 'sub':
+      ask('تاريخ تجديد الاشتراك',{type:'date',value:state.settings.subDate||''},function(v){
+        if(/^\d{4}-\d{2}-\d{2}$/.test(v)){state.settings.subDate=v;save();renderView();}
+        else toast('اختار تاريخ صحيح');
+      });break;
+    case 'subclear':
+      if(confirm('تمسح تاريخ الاشتراك؟')){state.settings.subDate=null;save();renderView();}break;
+    case 'export':exportData();break;
+    case 'import':$('#fileIn').click();break;
+    case 'snooze':snoozed=true;renderView();break;
+  }
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-act]');
+  if(b)act(b.dataset.act,b);
+});
+$('#view').addEventListener('input',function(e){
+  var f=e.target.dataset&&e.target.dataset.f;
+  if(!f)return;
+  var v=e.target.value;
+  var n=(v===''?null:Number(v));
+  draft[f]=(n!=null&&isNaN(n))?null:n;
+  setDirty(true);
+  if(f==='cal')updateCalUI();
+});
+$('#fileIn').addEventListener('change',function(e){
+  var file=e.target.files&&e.target.files[0];
+  e.target.value='';
+  if(!file)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var o=JSON.parse(r.result);
+      if(!o||typeof o.days!=='object')throw new Error('bad');
+      var n=Object.keys(o.days).length;
+      if(!confirm('هيتم استبدال كل بياناتك الحالية بالنسخة اللي في الملف ('+n+' يوم). تكمل؟'))return;
+      state=normalize(o);save();
+      selected=effToday();viewMonth=selected.slice(0,7);statMonth=viewMonth;weekOffset=0;
+      openDay(selected);render({center:true});toast('اتسترجعت البيانات');
+    }catch(err){toast('الملف مش نسخة احتياطية صالحة');}
+  };
+  r.readAsText(file);
+});
+window.addEventListener('beforeunload',function(e){if(dirty){e.preventDefault();e.returnValue='';}});
+
+/* roll the day over at 6 AM while the app stays open */
+var lastT=effToday();
+setInterval(function(){
+  var n=effToday();
+  if(n!==lastT){
+    lastT=n;
+    if(!dirty){selected=n;viewMonth=n.slice(0,7);openDay(n);}
+    render({center:true});
+  }
+},60000);
+
+render({center:true});
+
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
+  window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});
+}
+
+if(window.__GT_TEST){window.__GT_TEST.api={act:act,state:function(){return state;},draft:function(){return draft;},weightBlocks:weightBlocks,streaks:streaks,summarize:summarize,weekStartOf:weekStartOf,addDays:addDays,diffDays:diffDays,saveDay:saveDay,openDay:openDay,render:render,setTab:function(t){tab=t;}};}
+})();
+</script>
+</body>
+</html>
